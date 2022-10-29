@@ -25,6 +25,7 @@ function dataTesting(realData)
     count  = count + (keys["10"] and 10 or 0)
     count  = count + (keys["20"] and 20 or 0)
     count  = count + (keys["35"] and 35 or 0)
+    count  = ((count > 0) and count or 10)
 
     local tableing = realData["dic"]
     local voc = 0
@@ -44,18 +45,41 @@ end
 function main()
     logger = log.init()
     getArgs()
-    local learnPath = data[2] or ""
     if keys["l1"] then
         logger:log(args)
         logger:log(keys)
         logger:log(data)
         logger:log(_G,nil,1)
     end
-    local file = io.open(learnPath)
-    if file ~= nil then
-        local data = file:read("*a")
-        io.close(file)
-        dataTesting(json.decode(data))
+    if keys["h"] or keys["help"] then
+        print(
+[[
+-h    displays the help menu
+-help displays the help menu
+-5  for + 5 vocabulary
+-10 for +10 vocabulary
+-20 for +20 vocabulary
+-35 for +35 vocabulary
+]]
+        )
+    else
+        local file = nil
+        if data[2] ~= nil then
+            file = io.open(data[2])
+        else
+            io.write("Traning file: ")
+            io.flush()
+            local inp = io.read()
+            file,m1,m2 = io.open(inp)
+            if keys["l2"] then
+                logger:log({inp,file,m1,m2},nil,2)
+            end
+        end
+        if file ~= nil then
+            local data = file:read("*a")
+            io.close(file)
+            dataTesting(json.decode(data))
+        end
     end
 end
 
