@@ -5,7 +5,7 @@ learn your vocabulary now! (by making a huge table by hand)
 ### Make
 Create a file `*.json`.
 Fill it with:
-```
+```json
 {
     "dic":[
         ["vocabulary English 1","vocabulary Other 1"],
